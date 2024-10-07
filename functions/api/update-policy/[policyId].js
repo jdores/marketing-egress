@@ -14,11 +14,11 @@ export async function onRequestPost({ params, env }) {
   const usIPv4 = "8.29.230.198";
   const usIPv6 = "2a09:bac0:1000:3c::/64";
 
-  const asiaIPv4 = "8.29.231.196";
-  const asiaIPv6 = "2a09:bac0:1001:3a::/64";
-
   const southamIPv4 = "104.30.133.91";
   const southamIPv6 = "2a09:bac0:1000:473::/64";
+
+  const asiaIPv4 = "8.29.231.196";
+  const asiaIPv6 = "2a09:bac0:1001:3a::/64";
 
   var newIPv4 = "104.30.133.92";
   var newIPv6 = "2a09:bac0:1000:35f::/64";
@@ -33,19 +33,27 @@ export async function onRequestPost({ params, env }) {
     newIPv6 = usIPv6;
   }
   if (policyId == 3){
-    newIPv4 = asiaIPv4;
-    newIPv4 = asiaIPv6;
-  }
-  if (policyId == 4){
     newIPv4 = southamIPv4;
     newIPv4 = southamIPv6;
   }
+  if (policyId == 4){
+    newIPv4 = asiaIPv4;
+    newIPv4 = asiaIPv6;
+  }
   console.log(newIPv4+" "+newIPv6);
+
+  var currentdate = new Date(); 
+  var policyDescription = "Updated by Cloudflare Pages at: " + currentdate.getDate() + "/"
+                  + (currentdate.getMonth()+1)  + "/" 
+                  + currentdate.getFullYear() + " @ "  
+                  + currentdate.getHours() + ":"  
+                  + currentdate.getMinutes() + ":" 
+                  + currentdate.getSeconds();
 
   const policyUpdate = {
     // Example policy update payload
     action: "egress",
-    description: "updated by Cloudflare Pages",
+    description: `${policyDescription}`,
     device_posture: "",
     enabled: true,
     filters: ["egress"],
