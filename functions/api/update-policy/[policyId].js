@@ -42,18 +42,10 @@ export async function onRequestPost({ params, env }) {
   }
   console.log(newIPv4+" "+newIPv6);
 
-  var currentdate = new Date(); 
-  var policyDescription = "Updated by CF Pages at (UTC): " + currentdate.getDate() + "/"
-                  + (currentdate.getMonth()+1)  + "/" 
-                  + currentdate.getFullYear() + " @ "  
-                  + currentdate.getHours() + ":"  
-                  + currentdate.getMinutes() + ":" 
-                  + currentdate.getSeconds();
-
   const policyUpdate = {
     // Example policy update payload
     action: "egress",
-    description: `${policyDescription}`,
+    description: `Updated by Cloudflare Pages`,
     device_posture: "",
     enabled: true,
     filters: ["egress"],
