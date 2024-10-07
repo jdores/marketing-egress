@@ -48,6 +48,6 @@ export async function onRequestPost({ params }) {
   }
 
   */
-  return new Response(JSON.stringify("Hello World"), { status: 200 });
+  return new Response(JSON.stringify(${policyId}), { status: 200 });
 }
 
