@@ -1,1 +1,1 @@
-Cloudflare Pages project that update a Cloudflare Gateway Egress Policy
+Cloudflare Pages project that updates a Cloudflare Gateway Egress Policy
