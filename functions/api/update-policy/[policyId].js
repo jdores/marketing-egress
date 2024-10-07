@@ -34,16 +34,16 @@ export async function onRequestPost({ params, env }) {
   }
   if (policyId == 3){
     newIPv4 = southamIPv4;
-    newIPv4 = southamIPv6;
+    newIPv6 = southamIPv6;
   }
   if (policyId == 4){
     newIPv4 = asiaIPv4;
-    newIPv4 = asiaIPv6;
+    newIPv6 = asiaIPv6;
   }
   console.log(newIPv4+" "+newIPv6);
 
   var currentdate = new Date(); 
-  var policyDescription = "Updated by Cloudflare Pages at: " + currentdate.getDate() + "/"
+  var policyDescription = "Updated by CF Pages at (UTC): " + currentdate.getDate() + "/"
                   + (currentdate.getMonth()+1)  + "/" 
                   + currentdate.getFullYear() + " @ "  
                   + currentdate.getHours() + ":"  
@@ -93,15 +93,14 @@ export async function onRequestPost({ params, env }) {
 
     const result = await response.json();
 
+    console.log(response.status)
     if (response.ok) {
       return new Response(JSON.stringify(result), { status: 200 });
     } else {
-      return new Response(JSON.stringify(result), { status: response.status });
+      return new Response(JSON.stringify(result), { status: "Egress IP changed successfully" });
     }
   } catch (error) {
     return new Response('Error updating policy', { status: 500 });
   }
-  //console.log(env.segredo);
-  //return new Response(JSON.stringify(`Updated Policy ${policyId}`), { status: 200 });
 }
 
