@@ -49,6 +49,7 @@ export async function onRequestPost({ params }) {
 
   */
   //return new Response(JSON.stringify(`Updated Policy ${policyId}. ${env.segredo}`), { status: 200 });
+  console.log(env.segredo);
   return new Response(JSON.stringify(`Updated Policy ${policyId}`), { status: 200 });
 }
 
