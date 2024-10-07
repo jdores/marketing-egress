@@ -20,22 +20,25 @@ export async function onRequestPost({ params, env }) {
   const southamIPv4 = "104.30.133.91";
   const southamIPv6 = "2a09:bac0:1000:473::/64";
 
+  var newIPv4 = "104.30.133.92";
+  var newIPv6 = "2a09:bac0:1000:35f::/64";
+
   console.log(policyId);
   if (policyId == 1){
-    const newIPv4 = europeIPv4;
-    const newIPv6 = europeIPv6;
+    newIPv4 = europeIPv4;
+    newIPv6 = europeIPv6;
   }
   if (policyId == 2){
-    const newIPv4 = usIPv4;
-    const newIPv6 = usIPv6;
+    newIPv4 = usIPv4;
+    newIPv6 = usIPv6;
   }
   if (policyId == 3){
-    const newIPv4 = asiaIPv4;
-    const newIPv4 = asiaIPv6;
+    newIPv4 = asiaIPv4;
+    newIPv4 = asiaIPv6;
   }
   if (policyId == 4){
-    const newIPv4 = southamIPv4;
-    const newIPv4 = southamIPv6;
+    newIPv4 = southamIPv4;
+    newIPv4 = southamIPv6;
   }
   console.log(newIPv4+" "+newIPv6);
 
