@@ -97,7 +97,7 @@ export async function onRequestPost({ params, env }) {
     if (response.ok) {
       return new Response(JSON.stringify(result), { status: 200 });
     } else {
-      return new Response(JSON.stringify(result), { status: "Egress IP changed successfully" });
+      return new Response(JSON.stringify(result), { status: "response.status" });
     }
   } catch (error) {
     return new Response('Error updating policy', { status: 500 });
