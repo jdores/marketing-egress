@@ -6,31 +6,53 @@ export async function onRequestPost({ params, env }) {
   const ruleId = env.RULE_ID;
   const userEmail = env.USER_EMAIL;
   const apiKey = env.API_KEY;
-  const networkPolicyApi = `https://api.cloudflare.com/client/v4/accounts/${accountId}/gateway/rules/${ruleId}`;
+  const egressApi = `https://api.cloudflare.com/client/v4/accounts/${accountId}/gateway/rules/${ruleId}`;
   
-  const enableAccess = "not(identity.email == \"miguel@jdores.xyz\")";
-  const disableAccess = "";
+  const europeIPv4 = "8.29.231.207";
+  const europeIPv6 = "2a09:bac0:1001:3f::/64";
 
+  const usIPv4 = "8.29.230.198";
+  const usIPv6 = "2a09:bac0:1000:3c::/64";
+
+  const southamIPv4 = "104.30.133.91";
+  const southamIPv6 = "2a09:bac0:1000:473::/64";
+
+  const asiaIPv4 = "8.29.231.196";
+  const asiaIPv6 = "2a09:bac0:1001:3a::/64";
+
+  var newIPv4 = "104.30.133.92";
+  var newIPv6 = "2a09:bac0:1000:35f::/64";
+
+  
   console.log(policyId);
   if (policyId == 1){
-    newIdentity = enableAccess;
+    newIPv4 = europeIPv4;
+    newIPv6 = europeIPv6;
   }
   if (policyId == 2){
-    newIdentity = disableAccess;
+    newIPv4 = usIPv4;
+    newIPv6 = usIPv6;
   }
-  console.log(newIdentity);
+  if (policyId == 3){
+    newIPv4 = southamIPv4;
+    newIPv6 = southamIPv6;
+  }
+  if (policyId == 4){
+    newIPv4 = asiaIPv4;
+    newIPv6 = asiaIPv6;
+  }
+  console.log(newIPv4+" "+newIPv6);
 
   const policyUpdate = {
-    name: "Technician access - explicit allow",
-    description: "Updated by Cloudflare Pages",
-    precedence: 0,
-    enabled: true,
-    action: "block",
-    filters: ["l4"],
-    traffic: "net.dst.ip == 10.132.0.2",
-    identity: `${newIdentity}`,
+    // Example policy update payload
+    action: "egress",
+    description: `Updated by Cloudflare Pages`,
     device_posture: "",
-    version: 1,
+    enabled: true,
+    filters: ["egress"],
+    identity: "any(identity.groups.name[*] in {\"marketing\"})",
+    name: "Marketing user egress",
+    precedence: 8753,
     rule_settings: {
       block_page_enabled: false,
       block_reason: "",
@@ -43,17 +65,16 @@ export async function onRequestPost({ params, env }) {
       ip_indicator_feeds: false,
       check_session: null,
       insecure_disable_dnssec_validation: false,
-      notification_settings: {
-        enabled: true,
-        msg: "Access denied to SSH server. You need to enable the explicit allow.",
-        support_url: "https://explicitallow.jdores.xyz/"
+      egress: {
+        ipv6: `${newIPv6}`,
+        ipv4: `${newIPv4}`
       }
-    }
-  }
+    } 
+  };
 
   try {
     // Make the API request to Cloudflare Gateway
-    const response = await fetch(networkPolicyApi, {
+    const response = await fetch(egressApi, {
       method: 'PUT',
       headers: {
         'X-Auth-Email': userEmail,
